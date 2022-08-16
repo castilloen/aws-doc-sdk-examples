@@ -29,7 +29,7 @@
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set the region 
-AWS.config.update({region: 'REGION'});
+AWS.config.update({region: 'us-east-1'});
 
 // Create the DynamoDB service object
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
@@ -37,32 +37,21 @@ var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 var params = {
   AttributeDefinitions: [
     {
-      AttributeName: 'CUSTOMER_ID',
-      AttributeType: 'N'
-    },
-    {
-      AttributeName: 'CUSTOMER_NAME',
+      AttributeName: 'IP',
       AttributeType: 'S'
     }
   ],
   KeySchema: [
     {
-      AttributeName: 'CUSTOMER_ID',
+      AttributeName: 'IP',
       KeyType: 'HASH'
-    },
-    {
-      AttributeName: 'CUSTOMER_NAME',
-      KeyType: 'RANGE'
     }
   ],
-  ProvisionedThroughput: {
-    ReadCapacityUnits: 1,
-    WriteCapacityUnits: 1
-  },
-  TableName: 'CUSTOMER_LIST',
+  TableName: 's411-qa-ipwhitelisted',
   StreamSpecification: {
     StreamEnabled: false
-  }
+  },
+  BillingMode: "PAY_PER_REQUEST"
 };
 
 // Call DynamoDB to create the table

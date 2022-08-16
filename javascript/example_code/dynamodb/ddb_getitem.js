@@ -29,17 +29,18 @@
 // Load the AWS SDK for Node.js
 var AWS = require('aws-sdk');
 // Set the region 
-AWS.config.update({region: 'REGION'});
+//AWS.config.update({region: 'us-east-1'});
 
 // Create the DynamoDB service object
-var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10',
+                            region: 'us-west-2',
+                            maxRetries: 1});
 
 var params = {
-  TableName: 'TABLE',
+  TableName: 's411-qa-ipwhitelisted',
   Key: {
-    'KEY_NAME': {N: '001'}
-  },
-  ProjectionExpression: 'ATTRIBUTE_NAME'
+    ip_addresses: {S:'191.95.52.36'}
+  }
 };
 
 // Call DynamoDB to read the item from the table
